@@ -1,17 +1,9 @@
 # learning_resources
-My collection of developer notes
+My collection of developer notes.
 
-## Bash resources
-Click [here](bash_resources.md) for some bash learning resources.
-
-## Git resources
-Click [here](git_resources.md) for some git learning resources.
-
-## Kotlin resources
-Click [her](kotlin_resources.md) for some kotlin learning resources.
-
-## Spring Core course notes
-Click [here](spring/spring-core.md) for my course notes from Spring Core.
-
-## Java web-server folder structure
-Click [here](web_server_without_spring.md) for some notes on the folder structure of a web server.
+* [Bash and terminal](bash_resources.md)
+* [FitNesse notes](fitnesse/fitnesse_resources.md)
+* [Git tips and tricks](git_resources.md)
+* [Java web-server folder structure](web_server_without_spring.md)
+* [Kotlin notes](kotlin_resources.md)
+* [Spring Core course notes](spring/spring-core.md) for my Spring Core course in 2018 at Glasspaper.
