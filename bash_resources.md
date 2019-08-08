@@ -1,3 +1,16 @@
+# Table of Contents
+* [Source and .](#Source-and-.)
+* [base64 encoding/decoding](#base64-encoding-/-decoding)
+* [less, head, tail](#less,-head,-tail)
+* [Piping |](#Piping)
+* [Running successive commands using only one line ; && ||](#Running-successive-commands-using-only-one-line)
+* [Diffing](#Diffing)
+* [Finding / Searching for a file](#Finding-/-Searching-for-a-file)
+* [Word, line, character and byte count: wc](#Word,-line,-character-and-byte-count:-wc)
+* [Replacing stuff](#Replacing-stuff)
+* [grep](#grep)
+* [System information](#System-information)
+
 # Source and .
 `source` copies the contents of another file into the file calling `source`. This means that the copied contents is run in the same process. Calling `./<otherfile.sh>` in the caller file results in the "ohterfile" being called in a separate process / shell.
 ```bash
@@ -53,12 +66,22 @@ Displays the last n-lines. To continually follow the end of a file pass in `-f`.
 $ ls > allmyfiles.txt # creates allmyfiles.txt filling it with the result of the ls command
 $ echo "End of directory listing" >> allmyfiles.txt # appends "End of directory listing" to allmyfiles
 $ ls > allmyfiles.txt # overwrites the content of allmyfiles.txt 
+$ ls > /dev/null # throws the input away, used to suppress output
 ```
 
-## | (pipe)
+### Different outputstreams
+```sh
+ls > file  # stdout to file, result will contain the output of ls
+ls 1> file # stdout to file, result will contain the output of ls
+ls 2> file # stderr to file, result will be an empty file
+less 2> file # stderr to file, the file will contain 'Missing filename ("less --help" for help)'
+ls &> file # stdout and stderr to file, result will contain the output of ls since there is no error
+```
+
+## Piping
 The pipe character `|` redirects the output from the left hand side into the input stream on the right hand side. 
 
-## Running successive commands using only one line ; && ||
+## Running successive commands using only one line
 To run multiple commands, separate each command set with `;`, `&&` or `||`. Using `;` runs all commands whether any of them fail or not. `&&` shortcircuits so that the successive commands are only run if the previous command ran successfully. `||` behaves the same as in normal code.
 
 ## Useful navigational shortcuts
@@ -83,7 +106,7 @@ $ !ls # will do the same as the above "ls -ll"
 
 Typing `history`will produce a list of the old commands. Rerun a command using `!n`, where n is the number of the command to run.
 
-## Diffing files / streams
+## Diffing
 The `diff` command lets us show the difference between two files or directories. `-` means the "file" should be read from the standard input (stdin). Understanding the output:
 * d: deletion
 * a: addition
@@ -103,7 +126,8 @@ $ find . -regex ".*1/y.*" # Normal regex on the entire path
 * -iname: Same as name, but casesensitive
 * -iregex: Regex on the whole path, caseinsensitive
 
-# Replacing stuff in files or stdin using sed
+# Replacing stuff
+## sed - replacement
 `sed` lets us replace stuff using regex or basic regex. If no file is provided as an argument, `sed` will use stidn. By default the output is written to stdout, in order to write to a file we can send it using `>>`or `>`.
 __Useful commands__
 * d: Delete line. `sed '[adress] d' [filename]`
@@ -121,8 +145,29 @@ $ echo "Magnus er sulten" | sed -E 's/(Mag[a-z]+)/\1 Jerre/' # Magnus Jerre er s
 Note that `\d` and `\w` don't work in `sed` since they are regex-macros.
 [sed-guide](https://adayinthelifeof.nl/2010/12/06/sed-simple-pattern-address-usage/)
 
-## Word, line, character and byte count: wc
+## vim - replacement
+When squashing many commits using git and vim, there is a simple method replace all but the first `pick` with `squash` or `fixup`.
+```sh
+:2,$s/pick/squash
+# : - is the "action" command, like :wq
+# 2 - starting line number to perform substition. 1-indexed
+# $ - last line
+# s - substition. use d for deletion
+# /pick - the pattern we're searching for
+# /squash - the new string
+```
+
+# Word, line, character and byte count: wc
 `wc` defaults to stdin if no file is given as an argument.
 
-## grep
+# grep
 `grep -rnw . -e "[pattern]"` recursively searches for the files and lines that match the basic regex pattern. `grep -o [pattern]` prints only the matching part, not the entire line.
+
+# System information
+## Disk usage
+We can list file and folder sizes using `du`, disk usage. 
+```sh
+$ du -h --max-depth=1 
+# -h human readable, kB/MB/GB
+# --max-depth=1 only files and folders in the current level
+```
