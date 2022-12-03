@@ -6,4 +6,4 @@ My collection of developer notes.
 * [Git tips and tricks](git_resources.md)
 * [Java web-server folder structure](web_server_without_spring.md)
 * [Kotlin notes](kotlin_resources.md)
-* [Spring Core course notes](spring/spring-core.md) for my Spring Core course in 2018 at Glasspaper.
+* [Spring Core course notes](spring/spring-core.md) from my Spring Core course in 2018 at Glasspaper.
